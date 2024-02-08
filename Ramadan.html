@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan</title>
+    <link rel="stylesheet" href="Ramadan.css">
+
+</head>
+
+
+<body>
+
+<div id="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="Ramadan.html">Ramadan</a>
+    <a href="prayer.html">Prayer time</a>
+</div>
+
+<div id="main">
+    <span style="font-size:30px;cursor:pointer;color: white;" onclick="openNav()">☰</span>
+
+  <div class="container">
+ 
+    <h2>Ramadan Timer</h2>
+     <h3>by Ch Rohail</h3>
+      <h3>suhoor Time 6:40 AM And Iftar Time 6:50 PM</h3>    
+
+
+    <div class="time" id="timer">00:00:00</div>
+<audio id="sound" src="azan1.mp3" ></audio>
+
+<h1 class="name" id="name-display"></h1>
+
+  
+
+  
+</div>
+
+<script>
+    function openNav() {
+        document.getElementById("sidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("sidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+
+
+
+  // Set Suhoor and Iftar times (24-hour format)
+  const suhoorTime = "06:50:00"; // Replace with actual Suhoor time
+  const iftarTime = "18:50:00"; // Replace with actual Iftar time
+
+  function updateTimer() {
+    const now = new Date();
+    const currentTime = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+    
+    const suhoorSeconds = convertToSeconds(suhoorTime);
+    const iftarSeconds = convertToSeconds(iftarTime);
+
+    let remainingTime;
+    let timerDisplay;
+
+    if (currentTime < suhoorSeconds) {
+      remainingTime = suhoorSeconds - currentTime;
+      timerDisplay = "Suhoor ends in: ";
+    } else if (currentTime < iftarSeconds) {
+      remainingTime = iftarSeconds - currentTime;
+      timerDisplay = "Iftar ends in: ";
+    } else {
+      // If it's past Iftar time, reset for the next day
+      const nextSuhoor = convertToSeconds("04:30:00"); // Replace with actual Suhoor time for the next day
+      remainingTime = nextSuhoor + (86400 - currentTime);
+      timerDisplay = "Suhoor ends in: ";
+    }
+
+    const hours = Math.floor(remainingTime / 3600);
+    const minutes = Math.floor((remainingTime % 3600) / 60);
+    const seconds = remainingTime % 60;
+
+    document.getElementById("timer").innerHTML = `${timerDisplay}${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`;
+
+    // Check if it's time for Suhoor or Iftar and play the sound
+    if (currentTime === suhoorSeconds || currentTime === iftarSeconds) {
+      document.getElementById("sound").play();
+    }
+  }
+
+  function convertToSeconds(time) {
+    const [hours, minutes, seconds] = time.split(':').map(Number);
+    return hours * 3600 + minutes * 60 + seconds;
+  }
+
+  function formatTime(value) {
+    return value < 10 ? `0${value}` : value;
+  }
+
+  // Update the timer every second
+  setInterval(updateTimer, 1000);
+
+
+
+
+  const names= [
+    "الله (Allah)",
+     "الرحمن (Ar-Rahman)",
+     "الرحيم (Ar-Rahim)",
+     "الملك (Al-Malik)",
+     "القدوس Al-Quddus",
+     "السلام (As-Salam)",
+    "المؤمن (Al-Mu'min)",
+    "المهيمن (Al-Muhaymin)",
+    "العزيز (Al-Aziz)",
+    "الجبار (Al-Jabbar)",
+    "المتكبر (Al-Mutakabbir)",
+    "الخالق (Al-Khaliq)",
+    "البارئ (Al-Bari')",
+    "المصور (Al-Musawwir)",
+    "الغفار (Al-Ghaffar)",
+    "القهار (Al-Qahhar)",
+    "الوهاب (Al-Wahhab)",
+    "الرزاق (Ar-Razzaq)",
+    "الفتاح (Al-Fattah)",
+    "العليم (Al-'Alim)",
+    "القابض (Al-Qabid)",
+    "الباسط (Al-Basit)",
+    "الخافض (Al-Khafid)",
+    "الرافع (Ar-Rafi')",
+    "المعز (Al-Mu'izz)",
+    "المذل (Al-Mudhill)",
+    "السميع (As-Sami')",
+    "البصير (Al-Basir)",
+    "الحكم (Al-Hakam)",
+    "العدل (Al-Adl)",
+    "اللطيف (Al-Latif)",
+    "الخبير (Al-Khabir)",
+    "الحليم (Al-Halim)",
+    "العظيم (Al-Azim)",
+    "الغفور (Al-Ghafur)",
+    "الشكور (Ash-Shakur)",
+    "العلي (Al-'Ali)",
+    "الكبير (Al-Kabir)",
+    "الحفيظ (Al-Hafiz)",
+    "المقيت (Al-Muqit)",
+    "الحسيب (Al-Hasib)",
+    "الجليل (Al-Jalil)",
+    "الكريم (Al-Karim)",
+    "الرقيب (Ar-Raqib)",
+    "المجيب (Al-Mujib)",
+    "الواسع (Al-Wasi')",
+    "الحكيم (Al-Hakim)",
+    "الودود (Al-Wadud)",
+    "المجيد (Al-Majid)",
+    "الباعث (Al-Ba'ith)",
+    "الشهيد (Ash-Shahid)",
+    "الحق (Al-Haqq)",
+    "الوكيل (Al-Wakil)",
+    "القوي (Al-Qawi)",
+    "المتين (Al-Matin)",
+    "الوالي (Al-Wali)",
+    "الحميد (Al-Hamid)",
+    "المحصي (Al-Muhsi)",
+    "المبدئ (Al-Mubdi')",
+    "المعيد (Al-Mu'id)",
+    "المحيي (Al-Muhyi)",
+    "المميت (Al-Mumit)",
+    "الحي (Al-Hayy)",
+    "القيوم (Al-Qayyum)",
+    "الواجد (Al-Wajid)",
+    "الماجد (Al-Majid)",
+    "الواحد (Al-Wahid)",
+    "الأحد (Al-Ahad)",
+    "الصمد (As-Samad)",
+    "القادر (Al-Qadir)",
+    "المقتدر (Al-Muqtadir)",
+    "المقدم (Al-Muqaddim)",
+    "المؤخر (Al-Mu'akhir)",
+    "الأول (Al-Awwal)",
+    "الآخر (Al-Akhir)",
+    "الظاهر (Az-Zahir)",
+    "الباطن (Al-Batin)",
+    "الوالي (Al-Wali)",
+    "المتعالي (Al-Muta'ali)",
+    "البر (Al-Barr)",
+    "التواب (At-Tawwab)",
+    "المنتقم (Al-Muntaqim)",
+    "العفو (Al-'Afuw)",
+    "الرؤوف (Ar-Ra'uf)",
+    "مالك الملك (Malik al-Mulk)",
+    "ذو الجلال والإكرام (Dhu al-Jalal wa al-Ikram)",
+    "المقسط (Al-Muqsit)",
+    "الجامع (Al-Jami')",
+    "الغني (Al-Ghani)",
+    "المغني (Al-Mughni)",
+    "المانع (Al-Mani')",
+    "الضار (Ad-Darr)",
+    "النافع (An-Nafi')",
+    "النور (An-Nur)",
+    "الهادي (Al-Hadi)",
+    "البديع (Al-Badi')",
+    "الباقي (Al-Baqi)",
+    "الوارث (Al-Warith)",
+    "الرشيد (Ar-Rashid)",
+        // Add the rest of the names here
+];
+// Function to display the names
+function displayNames() {
+    const nameDisplay = document.getElementById("name-display");
+    let index = 0;
+
+    setInterval(() => {
+        nameDisplay.textContent = names[index];
+        index = (index + 1) % names.length;
+    }, 1000); // Change name every 3 seconds (adjust as needed)
+}
+
+// Run the function when the page is loaded
+window.onload = displayNames;
+
+</script>
+</body>
+</html>
